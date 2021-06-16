@@ -1,3 +1,5 @@
+lappend auto_path .
+package require  Backend
 package require Tk
 #set demensions of gui window
 
@@ -121,4 +123,4 @@ grid rowconfigure .fr 7 -weight 1
 grid rowconfigure .fr 8 -weight 1
 grid rowconfigure .fr 9 -weight 1
 
-
+Backend::load_file
