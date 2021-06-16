@@ -29,8 +29,27 @@ ttk::label .fr.wirlb -text Wir
 ttk::label .fr.sielb -text Sie
 ttk::label .fr.ihrlb -text Ihr
 ttk::label .fr.descriptionlb -text des
-ttk::label .fr.timelb -text clocktime
 ttk::label .fr.verblb -text verb
+
+# set tags
+
+# .fr.ich add tag foo  1.5 1.10
+# .fr.ich tag config red -font -foreground red
+# .fr.du tag config red -font -foreground red
+# .fr.esErSie tag config red -font -foreground red
+# .fr.ihr tag config red -font -foreground red
+# .fr.wir tag config red -font -foreground red
+# .fr.sie tag config red -font -foreground red
+# .fr.verb tag config red -font -foreground red
+
+# .fr.ich tag config green -font -foreground green
+# .fr.du tag config green -font -foreground green
+# .fr.esErSie tag config green -font -foreground green
+# .fr.ihr tag config green -font -foreground green
+# .fr.wir tag config green -font -foreground green
+# .fr.sie tag config green -font -foreground green
+# .fr.verb tag config green -font -foreground green
+
 
 ttk::label .fr.empty1 -text " " 
 ttk::label .fr.empty2 -text  " " 
@@ -86,8 +105,6 @@ proc Zero {} {
 }
 
 
-# binded functions
-
 grid .fr -column 0 -row 0 
 grid .fr.descriptionlb -column 1 -row 0
 grid .fr.verblb -column 1 -row 1
@@ -123,4 +140,47 @@ grid rowconfigure .fr 7 -weight 1
 grid rowconfigure .fr 8 -weight 1
 grid rowconfigure .fr 9 -weight 1
 
-Backend::load_file
+# manage traces
+trace add variable ich write -command check_input
+trace add variable du write check_input
+trace add variable esErSie write check_input
+trace add variable ihr write check_input
+trace add variable wir write check_input
+trace add variable sie write check_input
+trace add variable verb write check_input
+
+proc check_input {} {
+    if { $ich != "" && $du != "" && $esErSie != "" && $ihr != "" && $wir != "" && $sie != "" && $verb != ""} {
+        set incorrectlist [Backend::check_input $ich $du $esErSie $sie $ihr $wir $verb]
+        foreach element $incorrectlist {
+            switch $element {
+                ich {
+                
+                }
+                du {
+
+                }
+                esErSie {
+
+                }
+                sie {
+
+                }
+                ihr {
+
+                }
+                wir {
+
+                }
+                verb {
+
+                }
+                default {
+                    puts "incorrect synax"
+                }
+            }
+        }
+        
+    }
+}
+

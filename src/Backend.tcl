@@ -1,29 +1,43 @@
 namespace eval ::Backend {
   
   namespace export load_file 
-  variable verb_dict
+  variable lines 
+  variable index
+  variable list
 
 }
 
 proc Backend::load_file {} {
-    ::struct::matrix data
-    set csvfile [open verbs.csv] 
-    csv::read2matrix $csvfile $data  , auto 
-    close $csvfile
+  variable lines
+  set csvfile [open verbs.csv] 
+  set lines [split $csv "\n"]
+  close $csvfile
+}
 
-    set rows [$data rows]
-    puts $rows
+proc Backend::load_dict { index } {
+  variable lines
+  variable list
+  set list {}
+  set list [lindex $lines $index]
+  return $list
+}
 
-    for {set row 0} {$row < $rows} {incr row} {
-    puts [$data get row $row]
+proc check_for_end {} {
+
+}
+
+proc Backend::check_input { ich du esErSie sie wir ihr verb} {
+  set inputlist { ich du esErSie sie wir ihr verb }
+  set incorrectlist {}
+  for { set a 0}  {$a < 7} {incr a} {
+    set pushedindex [expr $a + 2]
+    if {[lindex $Backend::list $pushedindex] != [lindex $inputlist $a] } {
+      lappend $incorrectlist [lindex $inputlist $a]
     }
+  }
+  return $incorrectlist
 }
 
 namespace eval ::Backend { variable version 1.0 }
 package provide Backend $Backend::version
 package require Tcl 8.5-
-package require csv
-package require struct::matrix
-
-
-Backend::load_file
